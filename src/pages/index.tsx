@@ -1,11 +1,16 @@
+import { GetStaticProps } from "next";
 import Head from "next/head";
 
-import { CardGrid } from "../components/CardGrid";
-import { Footer } from "../components/Footer";
-import { GetStarted } from "../components/GetStarted";
-import { Welcome } from "../components/Welcome";
+import { Header } from "../components";
+import { WiktionarySection } from "../components/WiktionarySection";
 
-export default function Home() {
+import { lookup } from "./api/lookup";
+
+interface HomeProps {
+  html: string;
+}
+
+export default function Home({ html = "" }: HomeProps) {
   return (
     <>
       <Head>
@@ -15,12 +20,28 @@ export default function Home() {
       </Head>
 
       <main>
-        <Welcome />
-        <GetStarted />
-        <CardGrid />
+        <Header></Header>
+        <h1>Wiktionary Reader</h1>
+        <WiktionarySection
+          html={html}
+        />
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
+
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const { html } = await lookup({
+    language: "Latin",
+    word: "scio"
+  });
+
+  return {
+    props: {
+      html,
+    },
+  };
+};

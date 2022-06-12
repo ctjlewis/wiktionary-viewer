@@ -1,0 +1,46 @@
+.mw-editsection {
+  @apply !hidden;
+}
+
+.ib-content {
+  @apply italic;
+}
+
+.derivedterms ul {
+  @apply columns-4;
+}
+
+h1, h2, h3, h4, h5, h6, table {
+  @apply mt-8;
+}
+
+dd {
+  @apply ml-8 my-2;
+}
+
+table {
+  @apply !block overflow-scroll;
+}
+
+table th, table tr, table td {
+  @apply p-1;
+  @apply text-xs;
+}
+
+ul, ol {
+  @apply text-sm;
+  @apply ml-4;
+  @apply max-w-md;
+}
+
+ul {
+  @apply list-disc;
+}
+
+ol {
+  @apply list-decimal;
+}
+
+li {
+  @apply py-2;
+}

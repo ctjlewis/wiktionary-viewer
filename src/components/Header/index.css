@@ -1,0 +1,5 @@
+header {
+  @apply absolute top-0 left-0;
+  @apply w-full h-16;
+  @apply bg-gray-100;
+}

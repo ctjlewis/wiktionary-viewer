@@ -17,3 +17,5 @@
  * 📝 EXPORT COMPONENT STYLES: Load your component style exports here as needed.
  */
 @import "./Card/index.css";
+@import "./Header/index.css";
+@import "./WiktionarySection/index.css";
