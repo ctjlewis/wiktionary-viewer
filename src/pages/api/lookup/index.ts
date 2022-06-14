@@ -6,7 +6,7 @@ export interface LookupRequest {
   word: string;
 }
 
-export interface LookupResponse {
+export interface LookupResponse extends LookupRequest {
   html: string;
 }
 
@@ -30,12 +30,13 @@ export const lookup: ApiFunction<LookupRequest, LookupResponse> = async ({
     throw new Error("No entry found for this language");
   }
 
-  let html = "";
   const languageHeader = languageSpan.parentNode;
-  // const nodesToRender = [];
 
+  let html = "";
+  let foundHeadWord = false;
   let finished = false;
   let currentNode: HTMLElement = languageHeader;
+
   while (currentNode = currentNode.nextElementSibling) {
     if (!finished) {
       switch (currentNode.tagName) {
@@ -45,7 +46,15 @@ export const lookup: ApiFunction<LookupRequest, LookupResponse> = async ({
           break;
       }
 
-      // nodesToRender.push(currentNode);
+      /**
+       * Try to read the formatted headword from this node (e.g. scio -> sciō).
+       */
+      const headWord = currentNode.querySelector(".headword");
+      if (headWord && !foundHeadWord) {
+        word = headWord.textContent.trim();
+        foundHeadWord = true;
+      }
+
       html += currentNode.outerHTML;
     } else {
       break;
@@ -55,6 +64,8 @@ export const lookup: ApiFunction<LookupRequest, LookupResponse> = async ({
   // console.log(nodesToRender.length);
 
   return {
+    language,
+    word,
     html,
   };
 };

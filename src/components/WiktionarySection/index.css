@@ -6,8 +6,13 @@
   @apply italic;
 }
 
+.derivedterms {
+  @apply center;
+}
+
 .derivedterms ul {
-  @apply columns-4;
+  @apply w-full m-0 columns-3;
+  @apply list-none;
 }
 
 h1, h2, h3, h4, h5, h6, table {
@@ -37,10 +42,35 @@ ul {
   @apply list-disc;
 }
 
+ul ul {
+  @apply list-none;
+}
+
 ol {
   @apply list-decimal;
 }
 
 li {
-  @apply py-2;
+  @apply px-2 py-2;
+}
+
+main a {
+  @apply font-medium text-blue-800;
+}
+
+.IPA {
+  @apply pl-2 text-xl font-normal;
+}
+
+.IPA:not(.IPA ~ .IPA)::before {
+  @apply block;
+  content: "\A";
+}
+
+main {
+  @apply font-light;
+}
+
+strong {
+  @apply font-semibold;
 }

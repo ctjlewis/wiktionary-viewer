@@ -1,5 +1,11 @@
 header {
-  @apply absolute top-0 left-0;
+  @apply fixed top-0 left-0;
   @apply w-full h-16;
   @apply bg-gray-100;
+  @apply flex flex-row justify-between items-center;
+}
+
+header > * {
+  @apply m-0 w-full;
+  @apply px-4;
 }
