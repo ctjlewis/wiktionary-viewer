@@ -1,12 +1,47 @@
-import { GetStaticProps } from "next";
 import Head from "next/head";
 
 import { Header } from "../components";
 import { WiktionarySection } from "../components/WiktionarySection";
 
-import { lookup, LookupResponse } from "./api/lookup";
+import { isISO6391LanguageCode, LanguageCode } from "../lib/language";
+import { LookupResponse } from "./api/lookup";
 
-export default function Home({ html, language, word }: LookupResponse) {
+import ISO6391 from "iso-639-1";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+
+export default function Home() {
+  const { query } = useRouter();
+  let language: LanguageCode;
+  let word: string;
+
+  if (typeof query.word === "string") {
+    word = query.word;
+  } else {
+    word = "hello";
+  }
+
+  if (
+    typeof query.language === "string" &&
+    isISO6391LanguageCode(query.language)
+  ) {
+    language = query.language;
+  } else {
+    language = "en";
+  }
+
+  const { data } = useSWR<LookupResponse>(
+    `/api/lookup?word=${word}&language=${language}`,
+    async (url: string) => (await fetch(url)).json(),
+  );
+
+  if (!data) {
+    return null;
+  }
+
+  const { error, html } = data;
+  const languageName = ISO6391.getName(language);
+
   return (
     <>
       <Head>
@@ -19,11 +54,23 @@ export default function Home({ html, language, word }: LookupResponse) {
         <Header language={language} word={word} />
 
         <div className="flex-col center">
-          <h1>{word}</h1>
-          <span className="text-2xl">{language}</span>
+          <h1>
+            {word}
+          </h1>
+          <span className="text-2xl">
+            {languageName}
+          </span>
         </div>
 
-        <WiktionarySection html={html} />
+        {
+          error
+            ? (
+              <code>{JSON.stringify(error)}</code>
+            )
+            : (
+              <WiktionarySection html={html} />
+            )
+        }
       </main>
 
       {/* <Footer /> */}
@@ -32,17 +79,19 @@ export default function Home({ html, language, word }: LookupResponse) {
 }
 
 
-export const getStaticProps: GetStaticProps<LookupResponse> = async () => {
-  const { language, word, html } = await lookup({
-    language: "Latin",
-    word: "scio"
-  });
+// export const getStaticProps: GetStaticProps<LookupResponse> = async () => {
+//   const args: LookupRequest = {
+//     language: "la",
+//     word: "scio"
+//   };
 
-  return {
-    props: {
-      html,
-      language,
-      word
-    },
-  };
-};
+//   const { language, word, html } = await lookup(args);
+
+//   return {
+//     props: {
+//       html,
+//       language,
+//       word
+//     },
+//   };
+// };

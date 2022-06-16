@@ -1,30 +1,37 @@
 import { ApiFunction, withEndpoint } from "next-endpoint";
+import { isISO6391LanguageCode, ISO6391, LanguageCode } from "../../../lib/language";
 import { parse, HTMLElement } from "node-html-parser";
 
 export interface LookupRequest {
-  language: string;
+  language: LanguageCode;
   word: string;
 }
 
 export interface LookupResponse extends LookupRequest {
   html: string;
+  error?: string;
 }
 
 export const lookup: ApiFunction<LookupRequest, LookupResponse> = async ({
   language,
   word
 }) => {
-
   if (!language || !word) {
     throw new Error("Missing language or word");
   }
 
-  const url = `https://en.wiktionary.org/wiki/${word}#${language}`;
+  if (!isISO6391LanguageCode(language)) {
+    throw new Error("Invalid language");
+  }
+
+  const languageName = ISO6391.getName(language);
+
+  const url = `https://en.wiktionary.org/wiki/${word}#${languageName}`;
   const response = await fetch(url);
   const responseHtml = await response.text();
 
   const doc = parse(responseHtml);
-  const languageSpan = doc.getElementById(language);
+  const languageSpan = doc.getElementById(languageName);
 
   if (!languageSpan) {
     throw new Error("No entry found for this language");
