@@ -44,28 +44,25 @@ export const lookup: ApiFunction<LookupRequest, LookupResponse> = async ({
   let finished = false;
   let currentNode: HTMLElement = languageHeader;
 
-  while (currentNode = currentNode.nextElementSibling) {
-    if (!finished) {
-      switch (currentNode.tagName) {
-        case "H1":
-        case "H2":
-          finished = true;
-          break;
-      }
-
-      /**
-       * Try to read the formatted headword from this node (e.g. scio -> sciō).
-       */
-      const headWord = currentNode.querySelector(".headword");
-      if (headWord && !foundHeadWord) {
-        word = headWord.textContent.trim();
-        foundHeadWord = true;
-      }
-
-      html += currentNode.outerHTML;
-    } else {
-      break;
+  while (
+    (currentNode = currentNode.nextElementSibling) &&
+    !finished
+  ) {
+    switch (currentNode.tagName) {
+      case "H1":
+      case "H2":
+        finished = true;
+        continue;
     }
+    /**
+     * Try to read the formatted headword from this node (e.g. scio -> sciō).
+     */
+    const headWord = currentNode.querySelector(".headword");
+    if (headWord && !foundHeadWord) {
+      word = headWord.textContent.trim();
+      foundHeadWord = true;
+    }
+    html += currentNode.outerHTML;
   }
 
   // console.log(nodesToRender.length);

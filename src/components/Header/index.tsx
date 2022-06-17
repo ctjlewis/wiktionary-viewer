@@ -16,6 +16,7 @@ export const Header: FC<HeaderProps> = ({ children, word, language }) => {
           <select
             className="h-full max-w-[120px]"
             name="language"
+            defaultValue={language}
           >
             {
               Object.entries(LANGUAGES).map(
@@ -24,7 +25,6 @@ export const Header: FC<HeaderProps> = ({ children, word, language }) => {
                     <option
                       key={languageCode}
                       value={languageCode}
-                      selected={language === languageCode}
                     >
                       {languageName}
                       {/* {languageName} */}
