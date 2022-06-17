@@ -53,6 +53,11 @@ export const lookup: ApiFunction<LookupRequest, LookupResponse> = async ({
       case "H2":
         finished = true;
         continue;
+      /**
+       * If a link
+       */
+      // case "A":
+      //   break;
     }
     /**
      * Try to read the formatted headword from this node (e.g. scio -> sciō).

@@ -1,3 +1,11 @@
+main > *, main section > * {
+  @apply w-full;
+}
+
+.NavFrame > .NavHead {
+  @apply hidden;
+}
+
 .mw-editsection {
   @apply !hidden;
 }
@@ -7,11 +15,11 @@
 }
 
 .derivedterms {
-  @apply center;
+  @apply flex;
 }
 
 .derivedterms ul {
-  @apply w-full m-0 columns-3;
+  @apply w-full m-0 columns-2;
   @apply list-none;
 }
 
@@ -39,11 +47,8 @@ ul, ol {
 }
 
 ul {
-  @apply list-disc;
-}
-
-ul ul {
-  @apply list-none;
+  @apply list-none ml-0;
+  /* @apply flex flex-col; */
 }
 
 ol {
@@ -51,7 +56,12 @@ ol {
 }
 
 li {
-  @apply px-2 py-2;
+  @apply px-2 py-2 break-words;
+}
+
+li > ul {
+  /* @apply hidden; */
+  @apply flex flex-col;
 }
 
 main a {
@@ -74,3 +84,11 @@ main {
 strong {
   @apply font-semibold;
 }
+
+.audiotable {
+  @apply inline;
+}
+
+/* ul:first-of-type {
+  @apply list-none ml-0;
+} */

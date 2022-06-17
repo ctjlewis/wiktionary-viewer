@@ -12,7 +12,7 @@ export const WiktionarySection: FC<WiktionarySectionProps> = ({
   if (html) {
     return (
       <section
-        className="w-full px-8"
+        className="w-full px-4"
         dangerouslySetInnerHTML={{ __html: html }}
       >
         {children}
