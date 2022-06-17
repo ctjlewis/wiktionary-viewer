@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-export interface WiktionarySectionProps {
+export interface WikiViewProps {
   html?: string;
 }
 
-export const WiktionarySection: FC<WiktionarySectionProps> = ({
+export const WikiView: FC<WikiViewProps> = ({
   children,
   html
 }) => {
@@ -14,9 +14,7 @@ export const WiktionarySection: FC<WiktionarySectionProps> = ({
       <section
         className="w-full px-4"
         dangerouslySetInnerHTML={{ __html: html }}
-      >
-        {children}
-      </section>
+      />
     );
   }
 

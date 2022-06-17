@@ -64,7 +64,7 @@ li > ul {
   @apply flex flex-col;
 }
 
-main a {
+a {
   @apply font-medium text-blue-800;
 }
 
@@ -87,6 +87,14 @@ strong {
 
 .audiotable {
   @apply inline;
+}
+
+.sister-wikipedia {
+  @apply hidden;
+}
+
+#toc {
+  @apply hidden;
 }
 
 /* ul:first-of-type {

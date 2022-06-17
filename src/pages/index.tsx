@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 import { Header } from "../components";
-import { WiktionarySection } from "../components/WiktionarySection";
+import { WikiView } from "../views/WikiView";
 
 import { isISO6391LanguageCode, LanguageCode } from "../lib/language";
 import { LookupResponse } from "./api/lookup";
@@ -64,12 +64,8 @@ export default function Home() {
 
         {
           error
-            ? (
-              <code>{JSON.stringify(error)}</code>
-            )
-            : (
-              <WiktionarySection html={html} />
-            )
+            ? <code>{JSON.stringify(error)}</code>
+            : <WikiView html={html} />
         }
       </main>
 

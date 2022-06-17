@@ -18,3 +18,4 @@
  * Load this module's component styles.
  */
 @import "./components/index.css";
+@import "./views/index.css";
