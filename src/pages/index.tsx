@@ -39,7 +39,7 @@ export default function Home() {
     return null;
   }
 
-  const { error, html } = data;
+  const { error, html, word: headWord } = data;
   const languageName = ISO6391.getName(language);
 
   return (
@@ -55,7 +55,7 @@ export default function Home() {
 
         <div className="flex-col center">
           <h1>
-            {word}
+            {headWord || word}
           </h1>
           <span className="text-2xl">
             {languageName}
