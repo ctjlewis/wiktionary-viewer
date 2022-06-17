@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
+
+import { ISO6391 } from "../../lib/language";
+import { PageResponse } from "../api/page";
 import { WikiView } from "../../views/WikiView";
 
-import { PageResponse } from "../api/page";
+const TRANSLATION_MATCH = /\/wiki\/.+#.+/;
 
 export default function Page() {
-  const { asPath } = useRouter();
+  const { asPath, push } = useRouter();
   const { data } = useSWR<PageResponse>(
     `/api/page?href=${asPath}`,
     async (url: string) => (await fetch(url)).json(),
@@ -13,6 +16,14 @@ export default function Page() {
 
   if (asPath.startsWith("/[...")) {
     return null;
+  }
+
+  if (TRANSLATION_MATCH.test(asPath)) {
+    const word = asPath.replace("/wiki/", "").replace(/#.+/, "");
+    const language = asPath.replace("/wiki/", "").replace(/.+#/, "");
+    const languageCode = ISO6391.getCode(language);
+
+    push(`/?language=${languageCode}&word=${word}`);
   }
 
   if (!data) {
@@ -24,8 +35,4 @@ export default function Page() {
   return (
     <WikiView html={html} />
   );
-
-  // return (
-  //   <code>{JSON.stringify(page)}</code>
-  // );
 }
