@@ -97,6 +97,10 @@ strong {
   @apply hidden;
 }
 
+.mw-empty-elt {
+  @apply hidden;
+}
+
 /* ul:first-of-type {
   @apply list-none ml-0;
 } */

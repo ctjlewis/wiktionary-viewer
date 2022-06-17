@@ -1,5 +1,5 @@
 import { ApiFunction, withEndpoint } from "next-endpoint";
-import { parse, HTMLElement, Node, NodeType, TextNode } from "node-html-parser";
+import { parse, HTMLElement, Node, NodeType } from "node-html-parser";
 
 export interface PageRequest {
   href: string;
