@@ -18,7 +18,7 @@ export default function Page() {
     return null;
   }
 
-  if (TRANSLATION_MATCH.test(asPath)) {
+  if (TRANSLATION_MATCH.test(asPath) && !asPath.includes("Appendix:")) {
     const word = asPath.replace("/wiki/", "").replace(/#.+/, "");
     const language = asPath.replace("/wiki/", "").replace(/.+#/, "");
     const languageCode = ISO6391.getCode(language);

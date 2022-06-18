@@ -15,7 +15,7 @@ main > *, main section > * {
 }
 
 .derivedterms {
-  @apply flex;
+  @apply flex flex-col;
 }
 
 .derivedterms ul {

@@ -7,6 +7,7 @@ export interface PageRequest {
 
 export interface PageResponse extends PageRequest {
   html: string;
+  heading?: string;
   error?: string;
 }
 
@@ -31,9 +32,22 @@ export const page: ApiFunction<PageRequest, PageResponse> = async ({
 
   let html = "";
   const finished = false;
+
+  const heading = doc.getElementById("firstHeading");
+  if (heading) {
+    html += `<div class="flex-col center">${heading.outerHTML}</div>`;
+  }
+
   let currentNode = doc.getElementById("toc");
 
   while (currentNode && !finished) {
+    switch (currentNode.tagName) {
+      case "A":
+        const oldHref = currentNode.getAttribute("href");
+        currentNode.setAttribute("href", oldHref?.replace("en.wiktionary.org", "") ?? "#");
+        break;
+    }
+
     html += currentNode.outerHTML;
     currentNode = currentNode.nextElementSibling;
   }

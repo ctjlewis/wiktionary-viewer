@@ -53,6 +53,11 @@ export const lookup: ApiFunction<LookupRequest, LookupResponse> = async ({
       case "H2":
         finished = true;
         continue;
+
+      case "A":
+        const oldHref = currentNode.getAttribute("href");
+        currentNode.setAttribute("href", oldHref?.replace("en.wiktionary.org", "") ?? "#");
+        break;
     }
     /**
      * Try to read the formatted headword from this node (e.g. scio -> sciō).
