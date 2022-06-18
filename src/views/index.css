@@ -15,7 +15,7 @@ main > *, main section > * {
 }
 
 .derivedterms {
-  @apply flex flex-col;
+  @apply py-4 flex flex-col space-y-4;
 }
 
 .derivedterms ul {
