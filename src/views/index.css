@@ -2,6 +2,10 @@ main > *, main section > * {
   @apply w-full;
 }
 
+main {
+  @apply space-y-2 font-light;
+}
+
 .NavFrame > .NavHead {
   @apply hidden;
 }
@@ -75,10 +79,6 @@ a {
 .IPA:not(.IPA ~ .IPA)::before {
   @apply block;
   content: "\A";
-}
-
-main {
-  @apply font-light;
 }
 
 strong {
